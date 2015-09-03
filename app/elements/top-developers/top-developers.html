@@ -1,3 +1,5 @@
+<link rel="import" href="/bower_components/iron-ajax/iron-ajax.html">
+
 <dom-module id="top-developers">
   <style>
     :host {
@@ -6,13 +8,33 @@
   </style>
   <template>
     <h2 class="paper-font-display2">Top Developers</h2>
-    <p>This is the users section</p>
+
+    <ul>
+      <template is="dom-repeat" items="{{data.devs}}">
+        <li>
+          <span>{{item.Login}}</span> - <span>{{item.Name}}</span> - <span>{{item.Followers}}</span>
+        </li>
+      </template>
+    </ul>
+
+    <iron-ajax auto
+               url="http://localhost/topdevs"
+               handle-as="json"
+               last-response="{{data}}"
+               on-response="handleResponse"
+               on-error="handleError"></iron-ajax>
   </template>
 
   <script>
-    (function() {
+    (function () {
       Polymer({
-        is: 'top-developers'
+        is: 'top-developers',
+        handleResponse: function(data) {
+          console.log('Repsonse:', data);
+        },
+        handleError: function(req, err) {
+          console.error('Error:', err);
+        }
       });
     })();
   </script>
