@@ -27,6 +27,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       app.route = 'topdevs';
     });
 
+    page('/profile/:name', function (data) {
+      app.route = 'profile';
+      app.params = data.params;
+    });
+
     // add #! before urls
     page({
       hashbang: true

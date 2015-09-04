@@ -1,39 +1,64 @@
 <link rel="import" href="/bower_components/iron-ajax/iron-ajax.html">
 
 <dom-module id="top-developers">
+
   <style>
     :host {
       display: block;
+    }
+    table {
+      width: 100%;
+    }
+    th {
+      text-align: left;
+    }
+    #lastrun {
+      font-style: italic;
     }
   </style>
   <template>
     <h2 class="paper-font-display2">Top Developers</h2>
 
-    <ul>
+    <p id="lastrun">As of: <span>{{_date(data.lastrun)}}</span></p>
+
+    <table>
+      <thead>
+      <tr>
+        <th>Developer</th>
+        <th>Total Stars</th>
+        <th>Total Forks</th>
+        <th>Followers</th>
+      </tr>
+      </thead>
+      <tbody>
       <template is="dom-repeat" items="{{data.devs}}">
-        <li>
-          <span>{{item.Login}}</span> - <span>{{item.Name}}</span> - <span>{{item.Followers}}</span>
-        </li>
+        <tr>
+          <td>
+            <a href$="{{_getProfileLink(item.Login)}}">{{item.Name}}</a>
+          </td>
+          <td>{{item.Stars}}</td>
+          <td>{{item.Forks}}</td>
+          <td>{{item.Followers}}</td>
+        </tr>
       </template>
-    </ul>
+      </tbody>
+    </table>
 
     <iron-ajax auto
                url="http://localhost/topdevs"
                handle-as="json"
-               last-response="{{data}}"
-               on-response="handleResponse"
-               on-error="handleError"></iron-ajax>
+               last-response="{{data}}"></iron-ajax>
   </template>
 
   <script>
     (function () {
       Polymer({
         is: 'top-developers',
-        handleResponse: function(data) {
-          console.log('Repsonse:', data);
+        _getProfileLink: function(login) {
+          return '/profile/' + login;
         },
-        handleError: function(req, err) {
-          console.error('Error:', err);
+        _date: function(date) {
+          return new Date(date)
         }
       });
     })();
