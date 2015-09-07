@@ -5,14 +5,77 @@
     }
   </style>
   <template>
-    <h2 class="paper-font-display2">Profile</h2>
-    <p>This is the users section</p>
+    <img src="{{data.profile.User.avatar_url}}" height="230" width="230"/>
+    <p>{{data.profile.User.name}}</p>
+    <p>
+      <a href="{{_github(data.profile.User.login)}}" target="_blank">
+        <span>{{data.profile.User.login}}</span>
+      </a>
+    </p>
+    <h3 class="paper-font-display3">Stats</h3>
+    <dl>
+      <dt>Followers</dt>
+      <dd>{{data.profile.User.followers}}</dd>
+      <dt>Public Repos</dt>
+      <dd>{{data.profile.User.public_repos}}</dd>
+      <dt>Public Gists</dt>
+      <dd>{{data.profile.User.public_gists}}</dd>
+    </dl>
+    <h3 class="paper-font-display3">Repos</h3>
+    <dl>
+      <template is="dom-repeat" items="{{_getLanguages(data.profile.Repos)}}" as="language">
+        <dt><a href="{{_getLanguageUrl(language)}}">{{language}}</a></dt>
+        <template is="dom-repeat" items="{{_getRepos(data.profile.Repos, language)}}" as="repo">
+          <dd>
+            <span>{{repo.name}}</span>
+            <span>{{repo.stargazers_count}}</span> <iron-icon icon="favorite"></iron-icon>
+            <span>{{repo.forks_count}}</span>
+          </dd>
+        </template>
+      </template>
+    </dl>
+
+    <iron-ajax id="ajax"
+               handle-as="json"
+               last-response="{{data}}"></iron-ajax>
   </template>
 
   <script>
     (function() {
       Polymer({
-        is: 'user-profile'
+        is: 'user-profile',
+        properties: {
+          user: {
+            type: String,
+            observer: '_userChanged'
+          },
+          route: {
+            type: String
+          },
+          data : {
+            type: Object
+          }
+        },
+        attributeChanged: function(name, type) {
+          console.log(this.localName + '#' + this.id + ' attribute ' + name +
+            ' was changed to ' + this.getAttribute(name));
+        },
+        _userChanged: function() {
+          ajax.url = 'http://localhost/profile/' + this.user;
+          ajax.generateRequest();
+        },
+        _github: function(login) {
+          return 'https://github.com/' + login;
+        },
+        _getLanguages: function(repos) {
+          return repos ? Object.keys(repos) : [];
+        },
+        _getRepos: function(repos, language) {
+          return repos ? repos[language] : [];
+        },
+        _getLanguageUrl: function(lang) {
+          return '/language/' + lang;
+        }
       });
     })();
   </script>
