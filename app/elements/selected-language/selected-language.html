@@ -1,0 +1,47 @@
+<dom-module id="selected-language">
+  <style>
+    #stuff {
+      display: block;
+    }
+    paper-material {
+      border-radius: 2px;
+      height: 100%;
+      padding: 16px 0 16px 0;
+      width: calc(98.66% - 16px);
+      margin: 16px auto;
+      background: white;
+    }
+  </style>
+  <template>
+    <h2 class="paper-font-display2">[[language]]</h2>
+
+    <template is="dom-repeat" items="{{data.languages}}">
+      <paper-material elevation="1">
+          <p>{{item.Owner}}</p>
+      </paper-material>
+    </template>
+
+    <iron-ajax id="ajax"
+               handle-as="json"
+               last-response="{{data}}"></iron-ajax>
+  </template>
+
+  <script>
+    (function() {
+      Polymer({
+        is: 'selected-language',
+        properties: {
+          language: {
+            type: String,
+            observer: '_languageChanged'
+          }
+        },
+        _languageChanged: function() {
+          this.$.ajax.url = 'http://localhost/lang/' + this.language;
+          this.$.ajax.generateRequest();
+        }
+      });
+    })();
+  </script>
+
+</dom-module>
