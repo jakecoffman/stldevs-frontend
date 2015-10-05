@@ -134,8 +134,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             </section>
 
             <section data-route="profile">
-              <paper-material elevation="1">
-                <user-profile user="{{params.user}}"></user-profile>
+              <template is="dom-if" if="{{loading}}">
+                <paper-spinner active></paper-spinner>
+              </template>
+              <paper-material elevation="1" hidden="{{loading}}">
+                <user-profile user="{{params.user}}" loading="{{loading}}"></user-profile>
               </paper-material>
             </section>
 

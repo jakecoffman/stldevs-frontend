@@ -9,41 +9,39 @@
                handle-as="json"
                last-response="{{data}}"
                loading="{{loading}}"></iron-ajax>
-    <template is="dom-if" if="{{!loading}}">
-      <img src="{{data.profile.User.avatar_url}}" height="230" width="230"/>
+    <img src="{{data.profile.User.avatar_url}}" height="230" width="230"/>
 
-      <p>{{data.profile.User.name}}</p>
+    <p>{{data.profile.User.name}}</p>
 
-      <p>
-        <a href="{{_github(data.profile.User.login)}}" target="_blank">
-          <span>{{data.profile.User.login}}</span>
-        </a>
-      </p>
+    <p>
+      <a href="{{_github(data.profile.User.login)}}" target="_blank">
+        <span>{{data.profile.User.login}}</span>
+      </a>
+    </p>
 
-      <h3 class="paper-font-display3">Stats</h3>
-      <dl>
-        <dt>Followers</dt>
-        <dd>{{data.profile.User.followers}}</dd>
-        <dt>Public Repos</dt>
-        <dd>{{data.profile.User.public_repos}}</dd>
-        <dt>Public Gists</dt>
-        <dd>{{data.profile.User.public_gists}}</dd>
-      </dl>
-      <h3 class="paper-font-display3">Repos</h3>
-      <dl>
-        <template is="dom-repeat" items="{{_getLanguages(data.profile.Repos)}}" as="language">
-          <dt><a href="{{_getLanguageUrl(language)}}">{{language}}</a></dt>
-          <template is="dom-repeat" items="{{_getRepos(data.profile.Repos, language)}}" as="repo">
-            <dd>
-              <span>{{repo.name}}</span>
-              <span>{{repo.stargazers_count}}</span>
-              <iron-icon icon="favorite"></iron-icon>
-              <span>{{repo.forks_count}}</span>
-            </dd>
-          </template>
+    <h3 class="paper-font-display3">Stats</h3>
+    <dl>
+      <dt>Followers</dt>
+      <dd>{{data.profile.User.followers}}</dd>
+      <dt>Public Repos</dt>
+      <dd>{{data.profile.User.public_repos}}</dd>
+      <dt>Public Gists</dt>
+      <dd>{{data.profile.User.public_gists}}</dd>
+    </dl>
+    <h3 class="paper-font-display3">Repos</h3>
+    <dl>
+      <template is="dom-repeat" items="{{_getLanguages(data.profile.Repos)}}" as="language">
+        <dt><a href="{{_getLanguageUrl(language)}}">{{language}}</a></dt>
+        <template is="dom-repeat" items="{{_getRepos(data.profile.Repos, language)}}" as="repo">
+          <dd>
+            <span>{{repo.name}}</span>
+            <span>{{repo.stargazers_count}}</span>
+            <iron-icon icon="favorite"></iron-icon>
+            <span>{{repo.forks_count}}</span>
+          </dd>
         </template>
-      </dl>
-    </template>
+      </template>
+    </dl>
   </template>
 
   <script>
@@ -55,29 +53,11 @@
             type: String,
             observer: '_userChanged'
           },
-          route: {
-            type: String
-          },
-          data: {
-            type: Object
-          },
           loading: {
             type: Boolean,
             notify: true,
             value: true
           }
-        },
-        ready: function() {
-          console.log("Ready fired", this.user);
-        },
-        attached: function() {
-          console.log("Attached fired", this.user);
-        },
-        detached: function() {
-          console.log("Detached:", this.user);
-        },
-        attributeChanged: function() {
-          console.log("DomReady fired", this.user);
         },
         _userChanged: function () {
           this.$.ajax.url = 'http://localhost/profile/' + this.user;
