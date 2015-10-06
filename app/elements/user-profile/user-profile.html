@@ -10,7 +10,7 @@
     #cards {
       @apply(--layout-vertical);
       @apply(--center-justified);
-      max-width: 400px;
+      max-width: 600px;
       margin-left: auto;
       margin-right: auto;
     }
@@ -52,17 +52,16 @@
           <div class="card-content">
             <template is="dom-repeat" items="{{_getRepos(data.profile.Repos, language)}}" as="repo">
               <paper-item>
-                <paper-item-body class="horizontal layout">
-                  <div class="flex">
-                    <a href="{{_getRepoUrl(data.profile.User.login, repo.name)}}">{{repo.name}}</a>
-                  </div>
-                  <div>
-                    <span>{{repo.stargazers_count}}</span>
-                    <iron-icon icon="favorite"></iron-icon>
-                    <span>{{repo.forks_count}}</span>
-                    <span>{{repo.description}}</span>
-                  </div>
-                </paper-item-body>
+                <div class="flex">
+                  <a href="{{_getRepoUrl(data.profile.User.login, repo.name)}}">{{repo.name}}</a>
+                </div>
+                <div>
+                  <span>{{repo.stargazers_count}}</span>
+                  <iron-icon icon="star"></iron-icon>
+                  <span>{{repo.forks_count}}</span>
+                  <iron-icon src="/images/fork.png"></iron-icon>
+                  <span>{{repo.description}}</span>
+                </div>
               </paper-item>
             </template>
           </div>
