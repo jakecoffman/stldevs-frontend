@@ -82,7 +82,7 @@
     </table>
 
     <iron-ajax auto
-               url="http://localhost/topdevs"
+               url="{{_topdevs()}}"
                handle-as="json"
                last-response="{{data}}"></iron-ajax>
   </template>
@@ -99,6 +99,9 @@
             return new Date(date)
           }
           return ""
+        },
+        _topdevs: function() {
+          return 'http://' + location.hostname + '/topdevs';
         }
       });
     })();

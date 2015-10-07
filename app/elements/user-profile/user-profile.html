@@ -88,7 +88,7 @@
           }
         },
         _userChanged: function () {
-          this.$.ajax.url = 'http://localhost/profile/' + this.user;
+          this.$.ajax.url = 'http://' + location.hostname + '/profile/' + this.user;
           this.$.ajax.generateRequest();
         },
         _github: function (login) {
