@@ -79,7 +79,7 @@
     </table>
 
     <iron-ajax auto
-               url="http://localhost/toplangs"
+               url="{{_toplangs()}}"
                handle-as="json"
                last-response="{{data}}"></iron-ajax>
   </template>
@@ -96,6 +96,10 @@
             return new Date(date)
           }
           return ""
+        },
+        _toplangs: function() {
+          console.log(location.hostname);
+          return 'http://' + location.hostname + '/toplangs';
         }
       });
     })();
