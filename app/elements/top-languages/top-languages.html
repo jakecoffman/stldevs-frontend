@@ -3,16 +3,101 @@
     :host {
       display: block;
     }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      white-space: nowrap;
+      font-size: 13px;
+      background-color: rgb(255, 255, 255);
+    }
+    thead {
+      padding-bottom: 3px;
+    }
+    th {
+      position: relative;
+      vertical-align: bottom;
+      text-overflow: ellipsis;
+      font-size: 14px;
+      font-weight: bold;
+      line-height: 24px;
+      letter-spacing: 0;
+      color: rgba(0, 0, 0, 0.54);
+      height: 48px;
+      padding-bottom: 8px;
+      box-sizing: border-box;
+      text-align: left;
+    }
+    tbody tr {
+      position: relative;
+      height: 48px;
+      -webkit-transition-duration: 0.28s;
+      transition-duration: 0.28s;
+      -webkit-transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+      transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+      -webkit-transition-property: background-color;
+      transition-property: background-color;
+    }
+    tbody tr:hover {
+      background-color: #eeeeee;
+    }
+    td {
+      position: relative;
+      vertical-align: top;
+      height: 48px;
+      border-top: 1px solid rgba(0, 0, 0, 0.12);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+      padding-top: 12px;
+      box-sizing: border-box;
+      text-align: left;
+    }
+    #lastrun {
+      font-style: italic;
+    }
   </style>
   <template>
     <h2 class="paper-font-display2">Top Languages</h2>
-    <p>This is the users section</p>
+    <p id="lastrun">As of: <span>{{_date(data.lastrun)}}</span></p>
+
+    <table>
+      <thead>
+      <tr>
+        <th>Language</th>
+        <th>Amount of Repositories</th>
+        <th>Amount of Users</th>
+      </tr>
+      </thead>
+      <tbody>
+      <template is="dom-repeat" items="[[data.langs]]">
+        <tr>
+          <td>
+            <a href$="{{_getLanguageLink(item.Language)}}">[[item.Language]]</a>
+          </td>
+          <td>[[item.Count]]</td>
+          <td>[[item.Users]]</td>
+        </tr>
+      </template>
+      </tbody>
+    </table>
+
+    <iron-ajax auto
+               url="http://localhost/toplangs"
+               handle-as="json"
+               last-response="{{data}}"></iron-ajax>
   </template>
 
   <script>
     (function() {
       Polymer({
-        is: 'top-languages'
+        is: 'top-languages',
+        _getLanguageLink: function(login) {
+          return '/language/' + login;
+        },
+        _date: function(date) {
+          if (date) {
+            return new Date(date)
+          }
+          return ""
+        }
       });
     })();
   </script>
