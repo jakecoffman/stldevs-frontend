@@ -1,29 +1,38 @@
 <dom-module id="selected-language">
   <style>
-    #stuff {
-      display: block;
-    }
-    paper-material {
-      border-radius: 2px;
-      height: 100%;
-      padding: 16px 0 16px 0;
-      width: calc(98.66% - 16px);
-      margin: 16px auto;
+    .user {
+      padding: 16px;
+      margin-bottom: 16px;
       background: white;
+    }
+    .repo {
+      font-weight: bold;
     }
   </style>
   <template>
-    <h2 class="paper-font-display2">[[language]]</h2>
-
-    <template is="dom-repeat" items="{{data.languages}}">
-      <paper-material elevation="1">
-          <p>{{item.Owner}}</p>
-      </paper-material>
-    </template>
-
     <iron-ajax id="ajax"
                handle-as="json"
+               loading="{{loading}}"
                last-response="{{data}}"></iron-ajax>
+
+    <template is="dom-repeat" items="{{data.languages}}">
+      <paper-material elevation="1" class="user">
+        <a href="{{_getProfileLink(item.Owner)}}" class="paper-font-display1">{{item.Owner}}</a>
+        <div class="layout horizontal">
+          <div>
+            <p><span>{{_numStars(item.Repos)}}</span> stars in <span>[[data.language]]</span></p>
+            <p><span>{{_numRepos(item.Repos)}}</span> repos in <span>[[data.language]]</span></p>
+          </div>
+          <div class="flex">
+            <ul>
+              <template is="dom-repeat" items="{{_topThree(item.Repos)}}" as="repo">
+                <li><span class="repo">[[repo.Name]]</span> - <span>[[repo.Stargazers]]</span> <span>[[repo.ForksCount]]</span> <span>[[repo.Description]]</span></li>
+              </template>
+            </ul>
+          </div>
+        </div>
+      </paper-material>
+    </template>
   </template>
 
   <script>
@@ -34,11 +43,35 @@
           language: {
             type: String,
             observer: '_languageChanged'
+          },
+          loading: {
+            type: Boolean,
+            notify: true
           }
         },
         _languageChanged: function() {
           this.$.ajax.url = 'http://localhost/lang/' + this.language;
           this.$.ajax.generateRequest();
+        },
+        _numStars: function(repos) {
+          var sum = 0;
+          for (var i=0; i < repos.length; i++) {
+            sum += repos[i].StargazersCount;
+          }
+          return sum;
+        },
+        _numRepos: function(repos) {
+          return repos.length;
+        },
+        _topThree: function(repos) {
+          var three = [];
+          for (var i=0; i < repos.length && i < 3; i++) {
+            three.push(repos[i]);
+          }
+          return three;
+        },
+        _getProfileLink: function(user) {
+          return "/profile/" + user;
         }
       });
     })();

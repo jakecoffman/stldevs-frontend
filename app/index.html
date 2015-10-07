@@ -100,12 +100,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
           <!-- Application name -->
           <div class="middle middle-container center horizontal layout">
-            <div class="app-name">St. Louis Developers</div>
+            <div class="app-name">[[title]]</div>
           </div>
 
           <!-- Application sub title -->
           <div class="bottom bottom-container center horizontal layout">
-            <div class="bottom-title paper-font-subhead">index of st louis software developers and designers</div>
+            <div class="bottom-title paper-font-subhead">[[tagline]]</div>
           </div>
 
         </paper-toolbar>
@@ -142,7 +142,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             </section>
 
             <section data-route="language">
-              <selected-language language="{{params.language}}"></selected-language>
+              <template is="dom-if" if="[[loading]]">
+                <paper-spinner active></paper-spinner>
+              </template>
+              <selected-language language="{{params.language}}" loading="{{loading}}" hidden="[[loading]]"></selected-language>
             </section>
 
           </iron-pages>
