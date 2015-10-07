@@ -17,24 +17,34 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     // More info: https://visionmedia.github.io/page.js/
     page('/', function () {
       app.route = 'home';
+      app.title = 'St. Louis Developers';
+      app.tagline = 'index of st louis software developers and designers';
     });
 
     page('/toplangs', function () {
       app.route = 'toplangs';
+      app.title = 'Top Languages';
+      app.tagline = 'most used programming languages by St. Louisans';
     });
 
     page('/topdevs', function () {
       app.route = 'topdevs';
+      app.title = 'Top Developers';
+      app.tagline = 'most prolific developers in St. Louis';
     });
 
     page('/profile/:user', function (data) {
       app.route = 'profile';
       app.params = data.params;
+      app.title = 'Developer Profile';
+      app.tagline = 'the work ' + data.params.user + ' has done';
     });
 
     page('/language/:language', function (data) {
       app.route = 'language';
       app.params = data.params;
+      app.title = data.params.language;
+      app.tagline = 'language use in St. Louis';
     });
 
     // add #! before urls

@@ -20,9 +20,8 @@
                handle-as="json"
                last-response="{{data}}"
                loading="{{loading}}"></iron-ajax>
-    <h1 class="paper-font-display2">Profile</h1>
-    <div class="horizontal around-justified layout">
-      <div>
+    <div class="horizontal layout wrap">
+      <div class="flex">
         <img src="{{data.profile.User.avatar_url}}" height="230" width="230"/>
 
         <p>{{data.profile.User.name}}</p>
@@ -53,14 +52,14 @@
             <template is="dom-repeat" items="{{_getRepos(data.profile.Repos, language)}}" as="repo">
               <paper-item>
                 <div class="flex">
-                  <a href="{{_getRepoUrl(data.profile.User.login, repo.name)}}">{{repo.name}}</a>
+                  <a href="{{_getRepoUrl(data.profile.User.login, repo.name)}}">{{repo.name}}</a> -
+                  <span>{{repo.description}}</span>
                 </div>
                 <div>
                   <span>{{repo.stargazers_count}}</span>
                   <iron-icon icon="star"></iron-icon>
                   <span>{{repo.forks_count}}</span>
                   <iron-icon src="/images/fork.png"></iron-icon>
-                  <span>{{repo.description}}</span>
                 </div>
               </paper-item>
             </template>
