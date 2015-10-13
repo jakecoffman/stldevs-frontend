@@ -58,13 +58,13 @@
             <template is="dom-repeat" items="{{_getRepos(data.profile.Repos, language)}}" as="repo">
               <paper-item>
                 <div class="flex">
-                  <a href="{{_getRepoUrl(data.profile.User.login, repo.name)}}">{{repo.name}}</a> -
-                  <span>{{repo.description}}</span>
+                  <a href="{{_getRepoUrl(data.profile.User.login, repo.Name)}}">{{repo.Name}}</a> -
+                  <span>{{repo.Description}}</span>
                 </div>
                 <div>
-                  <span>{{repo.stargazers_count}}</span>
+                  <span>{{repo.StargazersCount}}</span>
                   <iron-icon icon="star"></iron-icon>
-                  <span>{{repo.forks_count}}</span>
+                  <span>{{repo.ForksCount}}</span>
                   <iron-icon src="/images/fork.png"></iron-icon>
                 </div>
               </paper-item>
