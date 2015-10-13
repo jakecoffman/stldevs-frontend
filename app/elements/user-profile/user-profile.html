@@ -3,16 +3,20 @@
     :host {
       display: block;
     }
+
+    #main {
+      background: white;
+      padding: 16px;
+    }
+
     paper-card {
       margin-bottom: 16px;
       margin-right: 16px;
     }
+
     #cards {
-      @apply(--layout-vertical);
-      @apply(--center-justified);
-      max-width: 600px;
-      margin-left: auto;
-      margin-right: auto;
+    @apply(--layout-vertical);
+    @apply(--center-justified);
     }
   </style>
   <template>
@@ -20,29 +24,31 @@
                handle-as="json"
                last-response="{{data}}"
                loading="{{loading}}"></iron-ajax>
-    <div class="horizontal layout wrap">
-      <div class="flex">
-        <img src="{{data.profile.User.avatar_url}}" height="230" width="230"/>
+    <paper-material id="main" elevation="1">
+      <div class="horizontal layout wrap">
+        <div class="flex">
+          <img src="{{data.profile.User.avatar_url}}" height="230" width="230"/>
 
-        <p>{{data.profile.User.name}}</p>
+          <p>{{data.profile.User.name}}</p>
 
-        <p>
-          <a href="{{_github(data.profile.User.login)}}" target="_blank">
-            <span>{{data.profile.User.login}}</span>
-          </a>
-        </p>
+          <p>
+            <a href="{{_github(data.profile.User.login)}}" target="_blank">
+              <span>{{data.profile.User.login}}</span>
+            </a>
+          </p>
+        </div>
+        <div>
+          <dl>
+            <dt class="paper-font-display1">Followers</dt>
+            <dd class="paper-font-display2">{{data.profile.User.followers}}</dd>
+            <dt class="paper-font-display1">Public Repos</dt>
+            <dd class="paper-font-display2">{{data.profile.User.public_repos}}</dd>
+            <dt class="paper-font-display1">Public Gists</dt>
+            <dd class="paper-font-display2">{{data.profile.User.public_gists}}</dd>
+          </dl>
+        </div>
       </div>
-      <div>
-        <dl>
-          <dt class="paper-font-display1">Followers</dt>
-          <dd class="paper-font-display2">{{data.profile.User.followers}}</dd>
-          <dt class="paper-font-display1">Public Repos</dt>
-          <dd class="paper-font-display2">{{data.profile.User.public_repos}}</dd>
-          <dt class="paper-font-display1">Public Gists</dt>
-          <dd class="paper-font-display2">{{data.profile.User.public_gists}}</dd>
-        </dl>
-      </div>
-    </div>
+    </paper-material>
 
     <h2 class="paper-font-display2">Repositories</h2>
     <template is="dom-repeat" items="{{_getLanguages(data.profile.Repos)}}" as="language">
@@ -65,7 +71,7 @@
             </template>
           </div>
           <div class="card-actions">
-            <a href="{{_getLanguageUrl(language)}}">see all</a>
+            <a href="{{_getLanguageUrl(language)}}">see all <span>[[language]]</span> users</a>
           </div>
         </paper-card>
       </div>
@@ -103,7 +109,7 @@
         _getLanguageUrl: function (lang) {
           return '/language/' + lang;
         },
-        _getRepoUrl: function(login, repo) {
+        _getRepoUrl: function (login, repo) {
           return "https://github.com/" + login + "/" + repo;
         }
       });

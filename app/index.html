@@ -136,16 +136,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               <template is="dom-if" if="{{loading}}">
                 <paper-spinner active></paper-spinner>
               </template>
-              <paper-material elevation="1" hidden="{{loading}}">
-                <user-profile user="{{params.user}}" loading="{{loading}}"></user-profile>
-              </paper-material>
+              <user-profile user="{{params.user}}" loading="{{loading}}" hidden="{{loading}}">
+              </user-profile>
             </section>
 
             <section data-route="language">
               <template is="dom-if" if="[[loading]]">
                 <paper-spinner active></paper-spinner>
               </template>
-              <selected-language language="{{params.language}}" loading="{{loading}}" hidden="[[loading]]"></selected-language>
+              <selected-language language="{{params.language}}" loading="{{loading}}" hidden="[[loading]]">
+              </selected-language>
             </section>
 
           </iron-pages>

@@ -3,10 +3,14 @@
     .user {
       padding: 16px;
       margin-bottom: 16px;
-      background: white;
+      @apply(--layout-vertical);
+      @apply(--center-justified);
     }
     .repo {
       font-weight: bold;
+    }
+    .info {
+      list-style: none;
     }
   </style>
   <template>
@@ -16,22 +20,30 @@
                last-response="{{data}}"></iron-ajax>
 
     <template is="dom-repeat" items="{{data.languages}}">
-      <paper-material elevation="1" class="user">
-        <a href="{{_getProfileLink(item.Owner)}}" class="paper-font-display1">{{item.Owner}}</a>
-        <div class="layout horizontal">
+      <paper-card heading="{{item.Owner}}" elevation="1" class="user">
+        <div class="card-content horizontal layout">
           <div>
-            <p><span>{{_numStars(item.Repos)}}</span> stars in <span>[[data.language]]</span></p>
-            <p><span>{{_numRepos(item.Repos)}}</span> repos in <span>[[data.language]]</span></p>
+            <ul class="info">
+              <li><span>{{_numStars(item.Repos)}}</span> stars in <span>[[data.language]]</span></li>
+              <li><span>{{_numRepos(item.Repos)}}</span> repos in <span>[[data.language]]</span></li>
+            </ul>
           </div>
           <div class="flex">
             <ul>
               <template is="dom-repeat" items="{{_topThree(item.Repos)}}" as="repo">
-                <li><span class="repo">[[repo.Name]]</span> - <span>[[repo.Stargazers]]</span> <span>[[repo.ForksCount]]</span> <span>[[repo.Description]]</span></li>
+                <li>
+                  <span class="repo">[[repo.Name]]</span>
+                  <template is="dom-if" if="[[repo.Description]]">-</template>
+                  <span>[[repo.Description]]</span>
+                </li>
               </template>
             </ul>
           </div>
         </div>
-      </paper-material>
+        <div class="card-actions">
+          <a href="{{_getProfileLink(item.Owner)}}">see all of <span>[[item.Owner]]</span>'s projects</a>
+        </div>
+      </paper-card>
     </template>
   </template>
 
