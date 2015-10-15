@@ -179,7 +179,14 @@ gulp.task('clean', del.bind(null, ['.tmp', 'dist']));
 
 // Watch Files For Changes & Reload
 gulp.task('serve', ['styles', 'elements', 'images'], function () {
+  var proxyMiddleware = require('http-proxy-middleware');
+  var proxy = proxyMiddleware('/api', {
+    target: 'http://www.stldevs.com',
+    changeOrigin: true
+  });
+
   browserSync({
+    port: 80,
     notify: false,
     logPrefix: 'PSK',
     snippetOptions: {
@@ -196,7 +203,7 @@ gulp.task('serve', ['styles', 'elements', 'images'], function () {
     // https: true,
     server: {
       baseDir: ['.tmp', 'app'],
-      middleware: [ historyApiFallback() ],
+      middleware: [ proxy, historyApiFallback() ],
       routes: {
         '/bower_components': 'bower_components'
       }
