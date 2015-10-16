@@ -58,6 +58,10 @@
             <template is="dom-repeat" items="{{_getRepos(data.profile.Repos, language)}}" as="repo">
               <paper-item>
                 <div class="flex">
+                  <template is="dom-if" if="{{repo.Fork}}">
+                    <paper-tooltip for="fork">This repo is a fork</paper-tooltip>
+                    <iron-icon id="fork" src="/images/fork.png"></iron-icon>
+                  </template>
                   <a href="{{_getRepoUrl(data.profile.User.login, repo.Name)}}">{{repo.Name}}</a> -
                   <span>{{repo.Description}}</span>
                 </div>
