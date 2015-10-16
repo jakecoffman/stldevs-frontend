@@ -19,18 +19,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       app.route = 'home';
       app.title = 'St. Louis Developers';
       app.tagline = 'index of st louis software developers and designers';
+      ga('send', 'pageview', app.route);
     });
 
     page('/toplangs', function () {
       app.route = 'toplangs';
       app.title = 'Top Languages';
       app.tagline = 'most used programming languages by St. Louisans';
+      ga('send', 'pageview', app.route);
     });
 
     page('/topdevs', function () {
       app.route = 'topdevs';
       app.title = 'Top Developers';
       app.tagline = 'most prolific developers in St. Louis';
+      ga('send', 'pageview', app.route);
     });
 
     page('/profile/:user', function (data) {
@@ -38,6 +41,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       app.params = data.params;
       app.title = 'Developer Profile';
       app.tagline = 'the work ' + data.params.user + ' has done';
+      ga('send', 'pageview', app.route + '/' + data.params.user);
     });
 
     page('/language/:language', function (data) {
@@ -45,6 +49,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       app.params = data.params;
       app.title = data.params.language;
       app.tagline = 'language use in St. Louis';
+      ga('send', 'pageview', app.route + '/' + data.params.language);
     });
 
     // add #! before urls
