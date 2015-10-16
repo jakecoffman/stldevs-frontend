@@ -181,8 +181,11 @@ gulp.task('clean', del.bind(null, ['.tmp', 'dist']));
 gulp.task('serve', ['styles', 'elements', 'images'], function () {
   var proxyMiddleware = require('http-proxy-middleware');
   var proxy = proxyMiddleware('/api', {
-    target: 'http://www.stldevs.com',
-    changeOrigin: true
+    target: 'http://localhost:8080',
+    changeOrigin: true,
+    pathRewrite: {
+      '^/api' : ''
+    }
   });
 
   browserSync({
