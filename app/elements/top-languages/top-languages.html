@@ -99,7 +99,7 @@
         },
         _toplangs: function() {
           console.log(location.hostname);
-          return 'http://' + location.hostname + '/api/toplangs';
+          return location.protocol + location.hostname + '/api/toplangs';
         }
       });
     })();

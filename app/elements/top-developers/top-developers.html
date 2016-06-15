@@ -101,7 +101,7 @@
           return ""
         },
         _topdevs: function() {
-          return 'http://' + location.hostname + '/api/topdevs';
+          return location.protocol + location.hostname + '/api/topdevs';
         }
       });
     })();
