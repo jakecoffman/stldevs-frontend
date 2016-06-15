@@ -180,11 +180,11 @@ gulp.task('clean', del.bind(null, ['.tmp', 'dist']));
 // Watch Files For Changes & Reload
 gulp.task('serve', ['styles', 'elements', 'images'], function () {
   var proxyMiddleware = require('http-proxy-middleware');
-  var proxy = proxyMiddleware('/api', {
+  var proxy = proxyMiddleware('/stldevs-api', {
     target: 'http://localhost:8080',
     changeOrigin: true,
     pathRewrite: {
-      '^/api' : ''
+      '^/stldevs-api' : ''
     }
   });
 
