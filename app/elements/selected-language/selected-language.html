@@ -62,7 +62,7 @@
           }
         },
         _languageChanged: function() {
-          this.$.ajax.url = location.protocol + location.hostname + '/api/lang/' + this.language;
+          this.$.ajax.url = '/stldevs-api/lang/' + this.language;
           this.$.ajax.generateRequest();
         },
         _numStars: function(repos) {

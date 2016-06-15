@@ -98,7 +98,7 @@
           }
         },
         _userChanged: function () {
-          this.$.ajax.url = location.protocol + location.hostname + '/api/profile/' + this.user;
+          this.$.ajax.url = '/stldevs-api/profile/' + this.user;
           this.$.ajax.generateRequest();
         },
         _github: function (login) {
