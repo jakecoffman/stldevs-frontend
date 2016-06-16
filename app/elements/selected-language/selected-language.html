@@ -62,6 +62,9 @@
           }
         },
         _languageChanged: function() {
+          if (!this.language) {
+            return;
+          }
           this.$.ajax.url = '/stldevs-api/lang/' + this.language;
           this.$.ajax.generateRequest();
         },

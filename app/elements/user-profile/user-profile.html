@@ -98,6 +98,9 @@
           }
         },
         _userChanged: function () {
+          if (!this.user) {
+            return;
+          }
           this.$.ajax.url = '/stldevs-api/profile/' + this.user;
           this.$.ajax.generateRequest();
         },
