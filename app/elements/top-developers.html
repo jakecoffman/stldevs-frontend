@@ -91,6 +91,11 @@
     (function () {
       Polymer({
         is: 'top-developers',
+        properties: {
+          data: {
+            type: Array
+          }
+        },
         _getProfileLink: function(login) {
           return '/profile/' + login;
         },

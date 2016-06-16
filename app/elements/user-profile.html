@@ -27,12 +27,12 @@
     <paper-material id="main" elevation="1">
       <div class="horizontal layout wrap">
         <div class="flex">
-          <img src="{{data.profile.User.avatar_url}}" height="230" width="230"/>
+          <img src$="{{data.profile.User.avatar_url}}" height="230" width="230"/>
 
           <p>{{data.profile.User.name}}</p>
 
           <p>
-            <a href="{{_github(data.profile.User.login)}}" target="_blank">
+            <a href$="{{_github(data.profile.User.login)}}" target="_blank">
               <span>{{data.profile.User.login}}</span>
             </a>
           </p>
@@ -95,6 +95,9 @@
             type: Boolean,
             notify: true,
             value: true
+          },
+          data: {
+            type: Object
           }
         },
         _userChanged: function () {

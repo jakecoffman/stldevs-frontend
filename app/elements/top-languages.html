@@ -88,6 +88,11 @@
     (function() {
       Polymer({
         is: 'top-languages',
+        properties: {
+          data: {
+            type: Array
+          }
+        },
         _getLanguageLink: function(login) {
           return '/language/' + login;
         },
