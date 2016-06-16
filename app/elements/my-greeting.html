@@ -3,17 +3,20 @@
     :host {
       display: block;
     }
+
+    p {
+      @apply(--paper-font-body1);
+    }
   </style>
   <template>
     <h2 class="paper-font-display2">Hello world!</h2>
     <p>
       This is a site for discovering what open source work
       developers are doing in the Greater St. Louis
-      region.
+      region by harvesting public information from Github.
     </p>
 
     <p>
-      This site harvests public information from Github.
       If a user on Github has self-identified as being
       from St. Louis, they are included here. You may
       also log in to this site and request to be included
@@ -44,9 +47,9 @@
     <h2 class="paper-font-display1">Contribute</h2>
 
     <p>
-      If you would like to help development,
-      <a href="http://github.com/jakecoffman/stldevs">fork on
-      Github</a> or at least drop me a star! ;)
+      Contributions are weclome for <a href="http://github.com/jakecoffman/stldevs">backend (Go)</a>
+      and <a href="http://github.com/jakecoffman/stldevs-frontend">frontend (Polymer/web components)</a> work.
+      Filing issues is the easiest way to contribute.
     </p>
   </template>
 

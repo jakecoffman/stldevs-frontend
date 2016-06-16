@@ -42,11 +42,17 @@
   <!-- will be replaced with elements/elements.vulcanized.html -->
   <link rel="import" href="elements/elements.html">
   <!-- endreplace-->
+
+  <!-- For shared styles, shared-styles.html import in elements.html -->
+  <style is="custom-style" include="shared-styles"></style>
 </head>
 
-<body unresolved class="fullbleed layout vertical">
-  <span id="browser-sync-binding"></span>
-  <template is="dom-bind" id="app">
+<body unresolved>
+<!-- build:remove -->
+<span id="browser-sync-binding"></span>
+<!-- endbuild -->
+
+<template is="dom-bind" id="app">
 
     <paper-drawer-panel id="paperDrawerPanel">
       <!-- Drawer Scroll Header Panel -->
@@ -111,15 +117,11 @@
             </section>
 
             <section data-route="toplangs">
-              <paper-material elevation="1">
-                <top-languages></top-languages>
-              </paper-material>
+              <top-languages></top-languages>
             </section>
 
             <section data-route="topdevs">
-              <paper-material elevation="1">
-                <top-developers></top-developers>
-              </paper-material>
+              <top-developers></top-developers>
             </section>
 
             <section data-route="profile">

@@ -1,22 +1,32 @@
+<link rel="import" href="../styles/shared-styles.html">
+
 <dom-module id="user-profile">
-  <style>
+  <style include="shared-styles">
     :host {
       display: block;
     }
 
-    #main {
-      background: white;
-      padding: 16px;
-    }
-
     paper-card {
       margin-bottom: 16px;
-      margin-right: 16px;
+    }
+
+    .user {
+      @apply(--layout-horizontal);
+      @apply(--layout-justified);
+      @apply(--layout-wrap);
     }
 
     #cards {
-    @apply(--layout-vertical);
-    @apply(--center-justified);
+      @apply(--layout-vertical);
+      @apply(--center-justified);
+    }
+
+    .info {
+      list-style: none;
+    }
+
+    .info > li {
+      padding-bottom: 6px;
     }
   </style>
   <template>
@@ -24,30 +34,41 @@
                handle-as="json"
                last-response="{{data}}"
                loading="{{loading}}"></iron-ajax>
-    <paper-material id="main" elevation="1">
-      <div class="horizontal layout wrap">
-        <div class="flex">
-          <img src$="{{data.profile.User.avatar_url}}" height="230" width="230"/>
+    <paper-material id="main" elevation="1" class="user">
+      <section>
+        <p class="paper-font-display1">{{data.profile.User.name}}</p>
 
-          <p>{{data.profile.User.name}}</p>
+        <img src$="{{data.profile.User.avatar_url}}" height="230" width="230"/>
 
-          <p>
+        <ul class="info">
+          <li>
+            <iron-icon src="../images/github.png"></iron-icon>
             <a href$="{{_github(data.profile.User.login)}}" target="_blank">
-              <span>{{data.profile.User.login}}</span>
+              {{data.profile.User.login}}
             </a>
-          </p>
-        </div>
-        <div>
-          <dl>
-            <dt class="paper-font-display1">Followers</dt>
-            <dd class="paper-font-display2">{{data.profile.User.followers}}</dd>
-            <dt class="paper-font-display1">Public Repos</dt>
-            <dd class="paper-font-display2">{{data.profile.User.public_repos}}</dd>
-            <dt class="paper-font-display1">Public Gists</dt>
-            <dd class="paper-font-display2">{{data.profile.User.public_gists}}</dd>
-          </dl>
-        </div>
-      </div>
+          </li>
+          <li hidden$="{{!data.profile.User.blog}}">
+            <iron-icon icon="bookmark"></iron-icon>
+            <a href$="{{_makeLink(data.profile.User.blog)}}" target="_blank">
+              {{data.profile.User.blog}}
+            </a>
+          </li>
+          <li hidden$="{{!data.profile.User.email}}">
+            <iron-icon icon="mail"></iron-icon>
+            <a href$="mailto:{{data.profile.User.email}}">{{data.profile.User.email}}</a>
+          </li>
+        </ul>
+      </section>
+      <section class="horizontal layout center">
+        <dl>
+          <dt class="paper-font-display1">Followers</dt>
+          <dd class="paper-font-display2">{{data.profile.User.followers}}</dd>
+          <dt class="paper-font-display1">Public Repos</dt>
+          <dd class="paper-font-display2">{{data.profile.User.public_repos}}</dd>
+          <dt class="paper-font-display1">Public Gists</dt>
+          <dd class="paper-font-display2">{{data.profile.User.public_gists}}</dd>
+        </dl>
+      </section>
     </paper-material>
 
     <h2 class="paper-font-display2">Repositories</h2>
@@ -121,6 +142,9 @@
         },
         _getRepoUrl: function (login, repo) {
           return "https://github.com/" + login + "/" + repo;
+        },
+        _makeLink: function(possibleLink) {
+          return possibleLink.startsWith('http') ? possibleLink : 'http://' + possibleLink;
         }
       });
     })();

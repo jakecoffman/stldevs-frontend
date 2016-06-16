@@ -1,85 +1,39 @@
+<link rel="import" href="../styles/table-styles.html">
+
 <dom-module id="top-developers">
 
-  <style>
-    :host {
-      display: block;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      white-space: nowrap;
-      font-size: 13px;
-      background-color: rgb(255, 255, 255);
-    }
-    thead {
-      padding-bottom: 3px;
-    }
-    th {
-      position: relative;
-      vertical-align: bottom;
-      text-overflow: ellipsis;
-      font-size: 14px;
-      font-weight: bold;
-      line-height: 24px;
-      letter-spacing: 0;
-      color: rgba(0, 0, 0, 0.54);
-      height: 48px;
-      padding-bottom: 8px;
-      box-sizing: border-box;
-      text-align: left;
-    }
-    tbody tr {
-      position: relative;
-      height: 48px;
-      -webkit-transition-duration: 0.28s;
-      transition-duration: 0.28s;
-      -webkit-transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-      transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-      -webkit-transition-property: background-color;
-      transition-property: background-color;
-    }
-    tbody tr:hover {
-      background-color: #eeeeee;
-    }
-    td {
-      position: relative;
-      vertical-align: top;
-      height: 48px;
-      border-top: 1px solid rgba(0, 0, 0, 0.12);
-      border-bottom: 1px solid rgba(0, 0, 0, 0.12);
-      padding-top: 12px;
-      box-sizing: border-box;
-      text-align: left;
-    }
+  <style include="table-styles">
     #lastrun {
       font-style: italic;
     }
   </style>
   <template>
-    <p id="lastrun">Last refresh: <span>{{_date(data.lastrun)}}</span></p>
+    <p id="lastrun">Last refresh: {{_date(data.lastrun)}}</p>
 
-    <table>
-      <thead>
-      <tr>
-        <th>Developer</th>
-        <th>Total Stars</th>
-        <th>Total Forks</th>
-        <th>Followers</th>
-      </tr>
-      </thead>
-      <tbody>
-      <template is="dom-repeat" items="{{data.devs}}">
+    <paper-material elevation="1">
+      <table>
+        <thead>
         <tr>
-          <td>
-            <a href$="{{_getProfileLink(item.Login)}}">{{item.Name}}</a>
-          </td>
-          <td>{{item.Stars}}</td>
-          <td>{{item.Forks}}</td>
-          <td>{{item.Followers}}</td>
+          <th>Developer</th>
+          <th><iron-icon icon="star"></iron-icon></th>
+          <th><iron-icon src="../images/fork.png"></iron-icon></th>
+          <th><iron-icon icon="face"></iron-icon></th>
         </tr>
-      </template>
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+        <template is="dom-repeat" items="{{data.devs}}">
+          <tr>
+            <td>
+              <a href$="{{_getProfileLink(item.Login)}}">{{item.Name}}</a>
+            </td>
+            <td>{{item.Stars}}</td>
+            <td>{{item.Forks}}</td>
+            <td>{{item.Followers}}</td>
+          </tr>
+        </template>
+        </tbody>
+      </table>
+    </paper-material>
 
     <iron-ajax auto
                url="{{_topdevs()}}"
@@ -96,16 +50,16 @@
             type: Array
           }
         },
-        _getProfileLink: function(login) {
+        _getProfileLink: function (login) {
           return '/profile/' + login;
         },
-        _date: function(date) {
+        _date: function (date) {
           if (date) {
             return new Date(date)
           }
           return ""
         },
-        _topdevs: function() {
+        _topdevs: function () {
           return '/stldevs-api/topdevs';
         }
       });

@@ -1,55 +1,7 @@
+<link rel="import" href="../styles/table-styles.html">
+
 <dom-module id="top-languages">
-  <style>
-    :host {
-      display: block;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      white-space: nowrap;
-      font-size: 13px;
-      background-color: rgb(255, 255, 255);
-    }
-    thead {
-      padding-bottom: 3px;
-    }
-    th {
-      position: relative;
-      vertical-align: bottom;
-      text-overflow: ellipsis;
-      font-size: 14px;
-      font-weight: bold;
-      line-height: 24px;
-      letter-spacing: 0;
-      color: rgba(0, 0, 0, 0.54);
-      height: 48px;
-      padding-bottom: 8px;
-      box-sizing: border-box;
-      text-align: left;
-    }
-    tbody tr {
-      position: relative;
-      height: 48px;
-      -webkit-transition-duration: 0.28s;
-      transition-duration: 0.28s;
-      -webkit-transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-      transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-      -webkit-transition-property: background-color;
-      transition-property: background-color;
-    }
-    tbody tr:hover {
-      background-color: #eeeeee;
-    }
-    td {
-      position: relative;
-      vertical-align: top;
-      height: 48px;
-      border-top: 1px solid rgba(0, 0, 0, 0.12);
-      border-bottom: 1px solid rgba(0, 0, 0, 0.12);
-      padding-top: 12px;
-      box-sizing: border-box;
-      text-align: left;
-    }
+  <style include="table-styles">
     #lastrun {
       font-style: italic;
     }
@@ -57,26 +9,28 @@
   <template>
     <p id="lastrun">Last refresh: <span>{{_date(data.lastrun)}}</span></p>
 
-    <table>
-      <thead>
-      <tr>
-        <th>Language</th>
-        <th>Amount of Repositories</th>
-        <th>Amount of Users</th>
-      </tr>
-      </thead>
-      <tbody>
-      <template is="dom-repeat" items="[[data.langs]]">
+    <paper-material elevation="1">
+      <table>
+        <thead>
         <tr>
-          <td>
-            <a href$="{{_getLanguageLink(item.Language)}}">[[item.Language]]</a>
-          </td>
-          <td>[[item.Count]]</td>
-          <td>[[item.Users]]</td>
+          <th>Language</th>
+          <th>Repos</th>
+          <th>Users</th>
         </tr>
-      </template>
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+        <template is="dom-repeat" items="[[data.langs]]">
+          <tr>
+            <td>
+              <a href$="{{_getLanguageLink(item.Language)}}">[[item.Language]]</a>
+            </td>
+            <td>[[item.Count]]</td>
+            <td>[[item.Users]]</td>
+          </tr>
+        </template>
+        </tbody>
+      </table>
+    </paper-material>
 
     <iron-ajax auto
                url="{{_toplangs()}}"
@@ -85,7 +39,7 @@
   </template>
 
   <script>
-    (function() {
+    (function () {
       Polymer({
         is: 'top-languages',
         properties: {
@@ -93,16 +47,16 @@
             type: Array
           }
         },
-        _getLanguageLink: function(login) {
+        _getLanguageLink: function (login) {
           return '/language/' + login;
         },
-        _date: function(date) {
+        _date: function (date) {
           if (date) {
             return new Date(date)
           }
           return ""
         },
-        _toplangs: function() {
+        _toplangs: function () {
           console.log(location.hostname);
           return '/stldevs-api/toplangs';
         }

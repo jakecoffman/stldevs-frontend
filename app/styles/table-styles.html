@@ -1,0 +1,53 @@
+<link rel="import" href="./shared-styles.html">
+<link rel="import" href="./table-styles.html">
+
+<dom-module id="table-styles">
+  <template>
+    <style include="shared-styles">
+      paper-material {
+        display: block;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        white-space: nowrap;
+        font-size: 13px;
+        background-color: rgb(255, 255, 255);
+      }
+
+      thead {
+        padding-bottom: 3px;
+      }
+
+      th {
+        @apply(--paper-font-headline);
+        padding-bottom: 8px;
+      }
+
+      th:first-of-type {
+        text-align: left;
+      }
+
+      tbody tr:hover {
+        background-color: #eeeeee;
+      }
+
+      td {
+        @apply(--paper-font-body2);
+        vertical-align: top;
+        padding-top: 12px;
+        padding-bottom: 12px;
+        border-top: 1px solid rgba(0, 0, 0, 0.12);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+        box-sizing: border-box;
+        text-align: center;
+      }
+
+      td:first-child {
+        text-align: left;
+      }
+
+    </style>
+  </template>
+</dom-module>

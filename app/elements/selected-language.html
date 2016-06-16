@@ -1,18 +1,30 @@
 <link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
 
 <dom-module id="selected-language">
   <style>
+    :host {
+      display: block;
+    }
     .user {
-      padding: 16px;
-      margin-bottom: 16px;
       @apply(--layout-vertical);
-      @apply(--center-justified);
     }
     .repo {
       font-weight: bold;
     }
     .info {
       list-style: none;
+    }
+    .card {
+      width: 100%;
+      margin-bottom: 16px;
+    }
+    a > paper-button {
+      color: black;
+    }
+    .card-heading {
+      @apply(--layout-horizontal);
+      @apply(--layout-justified);
     }
   </style>
   <template>
@@ -21,29 +33,32 @@
                loading="{{loading}}"
                last-response="{{data}}"></iron-ajax>
 
-    <template is="dom-repeat" items="{{data.languages}}">
-      <paper-card heading="{{item.Owner}}" elevation="1" class="user">
-        <div class="card-content horizontal layout">
-          <div>
+    <template is="dom-repeat" items="{{data.languages}}" class="user">
+      <paper-card elevation="1" class="card">
+        <div class="card-content">
+          <div class="card-heading">
+            <h2 class="paper-font-headline">{{item.Owner}}</h2>
             <ul class="info">
               <li><span>{{_numStars(item.Repos)}}</span> stars in <span>[[data.language]]</span></li>
               <li><span>{{_numRepos(item.Repos)}}</span> repos in <span>[[data.language]]</span></li>
             </ul>
           </div>
-          <div class="flex">
-            <ul>
-              <template is="dom-repeat" items="{{_topThree(item.Repos)}}" as="repo">
-                <li>
-                  <span class="repo">[[repo.Name]]</span>
-                  <template is="dom-if" if="[[repo.Description]]">-</template>
-                  <span>[[repo.Description]]</span>
-                </li>
-              </template>
-            </ul>
-          </div>
+          <ul>
+            <template is="dom-repeat" items="{{_topThree(item.Repos)}}" as="repo">
+              <li>
+                <span class="repo">[[repo.Name]]</span>
+                <template is="dom-if" if="[[repo.Description]]">-</template>
+                <span>[[repo.Description]]</span>
+              </li>
+            </template>
+          </ul>
         </div>
         <div class="card-actions">
-          <a href="{{_getProfileLink(item.Owner)}}">see all of <span>[[item.Owner]]</span>'s projects</a>
+          <a href="{{_getProfileLink(item.Owner)}}">
+            <paper-button>
+              view [[item.Owner]]
+            </paper-button>
+          </a>
         </div>
       </paper-card>
     </template>
