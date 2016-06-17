@@ -64,7 +64,7 @@
         </paper-toolbar>
 
         <!-- Drawer Content -->
-        <paper-menu class="list" attr-for-selected="data-route" selected="{{route}}" on-iron-select="onMenuSelect">
+        <paper-menu class="list" attr-for-selected="data-route" selected="{{route}}">
           <a data-route="home" href="/">
             <iron-icon icon="home"></iron-icon>
             <span>Home</span>
@@ -88,7 +88,7 @@
       </paper-scroll-header-panel>
 
       <!-- Main Area -->
-      <paper-scroll-header-panel main condenses keep-condensed-header>
+      <paper-scroll-header-panel main condenses keep-condensed-header id="headerPanelMain">
 
         <!-- Main Toolbar -->
         <paper-toolbar id="mainToolbar" class="tall">

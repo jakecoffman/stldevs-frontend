@@ -2,31 +2,50 @@
 <script>
   window.addEventListener('WebComponentsReady', function() {
 
+    // Middleware
+    function scrollToTop(ctx, next) {
+      app.scrollPageToTop();
+      next();
+    }
+
+    function closeDrawer(ctx, next) {
+      app.closeDrawer();
+      next();
+    }
+
+    function setFocus(selected){
+      document.querySelector('section[data-route="' + selected + '"] .page-title').focus();
+    }
+
+    page('*', scrollToTop, closeDrawer, function(ctx, next) {
+      next();
+    });
+
     // We use Page.js for routing. This is a Micro
     // client-side router inspired by the Express router
     // More info: https://visionmedia.github.io/page.js/
     page('/', function () {
       app.route = 'home';
       app.title = 'St. Louis Developers';
-      app.tagline = 'index of st louis software developers and designers';
+      app.tagline = 'st louis software developers';
     });
 
     page('/toplangs', function () {
       app.route = 'toplangs';
       app.title = 'Top Languages';
-      app.tagline = 'most used programming languages by St. Louisans';
+      app.tagline = 'most used in St. Louis';
     });
 
     page('/topdevs', function () {
       app.route = 'topdevs';
       app.title = 'Top Developers';
-      app.tagline = 'most prolific developers in St. Louis';
+      app.tagline = 'most prolific in St. Louis';
     });
 
     page('/search', function() {
       app.route = 'search';
       app.title = 'Search';
-      app.tagline = '';
+      app.tagline = 'find developers or projects';
       app.params = undefined;
     });
 
@@ -42,6 +61,13 @@
       app.params = data.params;
       app.title = data.params.language;
       app.tagline = 'language use in St. Louis';
+    });
+
+    // 404
+    page('*', function() {
+      app.$.toast.text = 'Can\'t find: ' + window.location.href  + '. Redirected you to Home Page';
+      app.$.toast.show();
+      page.redirect(app.baseUrl);
     });
 
     // add #! before urls
