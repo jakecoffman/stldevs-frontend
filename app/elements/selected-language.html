@@ -101,7 +101,7 @@
             return;
           }
           this.page = 0;
-          this.$.ajax.url = '/stldevs-api/lang/' + this.language + '?page=0';
+          this.$.ajax.url = '/stldevs-api/lang/' + encodeURIComponent(this.language) + '?page=0';
           this.$.ajax.generateRequest();
         },
         previousPage: function() {
@@ -112,7 +112,7 @@
         },
         gotoPage: function(page) {
           this.page = page;
-          this.$.ajax.url = '/stldevs-api/lang/' + this.language + '?page=' + page;
+          this.$.ajax.url = '/stldevs-api/lang/' + encodeURIComponent(this.language) + '?page=' + page;
           this.$.ajax.generateRequest();
         },
         _dataChanged: function() {
@@ -138,7 +138,7 @@
           return three;
         },
         getProfileLink: function(user) {
-          return "/profile/" + user;
+          return "/profile/" + encodeURIComponent(user);
         }
       });
     })();

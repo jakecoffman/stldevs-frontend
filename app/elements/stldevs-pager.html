@@ -64,7 +64,6 @@
       showing: function() {
         let last = this.page * 20 + 20;
         last = last > this.count ? this.count : last;
-        console.log('page', this.page);
         return this.page * 20 + "-" + last;
       }
     });

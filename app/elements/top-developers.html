@@ -51,7 +51,7 @@
           }
         },
         _getProfileLink: function (login) {
-          return '/profile/' + login;
+          return '/profile/' + encodeURIComponent(login);
         },
         _date: function (date) {
           if (date) {

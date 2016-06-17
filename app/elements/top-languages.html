@@ -48,7 +48,7 @@
           }
         },
         _getLanguageLink: function (login) {
-          return '/language/' + login;
+          return '/language/' + encodeURIComponent(login);
         },
         _date: function (date) {
           if (date) {
@@ -57,7 +57,6 @@
           return ""
         },
         _toplangs: function () {
-          console.log(location.hostname);
           return '/stldevs-api/toplangs';
         }
       });

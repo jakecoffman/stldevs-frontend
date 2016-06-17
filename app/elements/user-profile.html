@@ -125,11 +125,11 @@
           if (!this.user) {
             return;
           }
-          this.$.ajax.url = '/stldevs-api/profile/' + this.user;
+          this.$.ajax.url = '/stldevs-api/profile/' + encodeURIComponent(this.user);
           this.$.ajax.generateRequest();
         },
         _github: function (login) {
-          return 'https://github.com/' + login;
+          return 'https://github.com/' + encodeURIComponent(login);
         },
         _getLanguages: function (repos) {
           return repos ? Object.keys(repos) : [];
@@ -138,10 +138,10 @@
           return repos ? repos[language] : [];
         },
         _getLanguageUrl: function (lang) {
-          return '/language/' + lang;
+          return '/language/' + encodeURIComponent(lang);
         },
         _getRepoUrl: function (login, repo) {
-          return "https://github.com/" + login + "/" + repo;
+          return "https://github.com/" + encodeURIComponent(login) + "/" + encodeURIComponent(repo);
         },
         _makeLink: function(possibleLink) {
           if (possibleLink) {
