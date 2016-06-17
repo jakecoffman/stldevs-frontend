@@ -8,6 +8,7 @@
 <link rel="import" href="../bower_components/paper-spinner/paper-spinner.html">
 <link rel="import" href="../styles/shared-styles.html">
 <link rel="import" href="./stldevs-pager.html">
+<link rel="import" href="../bower_components/paper-styles/classes/typography.html">
 
 <dom-module id="stldevs-search">
   <style inherit="shared-styles">
@@ -40,6 +41,13 @@
 
     .repo {
       display: block;
+      @apply(--layout-horizontal);
+      @apply(--layout-justified);
+    }
+
+    .starsnforks {
+      @apply(--layout-vertical);
+      min-width: 50px;
     }
 
     .nostyle {
@@ -90,9 +98,19 @@
 
     <h2 class="paper-font-display2" hidden$="{{noResults(repos)}}">Repositories</h2>
     <template is="dom-repeat" items="{{repos.results}}">
-      <paper-material elevation="1" class="repo">
-        <a href$="profile/{{item.Owner}}">{{item.Owner}}/{{item.Name}}</a> {{item.Description}}
-      </paper-material>
+      <a href$="profile/{{item.Owner}}" class="nostyle">
+        <paper-material elevation="1" class="repo">
+          <div>
+            <div class="paper-font-headline">{{item.Owner}}/{{item.Name}}</div>
+            <span class="paper-font-body1">{{item.Description}}</span>
+          </div>
+          <div class="starsnforks">
+            <span><iron-icon icon="star"></iron-icon> {{item.StargazersCount}}</span>
+            <span><iron-icon src="../images/fork.png"></iron-icon> {{item.ForksCount}}</span>
+          </div>
+        </paper-material>
+      </a>
+      </template>
     </template>
 
   </template>

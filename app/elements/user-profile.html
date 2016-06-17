@@ -11,6 +11,10 @@
       display: block;
     }
 
+    #main {
+      display: block;
+    }
+
     paper-card {
       margin-bottom: 16px;
     }
@@ -44,33 +48,35 @@
                handle-as="json"
                last-response="{{data}}"
                loading="{{loading}}"></iron-ajax>
-    <paper-material id="main" elevation="1" class="user">
-      <div>
-        <p class="paper-font-display1">{{data.profile.User.name}}</p>
-        <img src$="{{data.profile.User.avatar_url}}" height="230" width="230"/>
-      </div>
-      <div>
-        <ul class="info">
-          <li>Followers: {{data.profile.User.followers}}</li>
-          <li>Public Repos: {{data.profile.User.public_repos}}</li>
-          <li>Public Gists: {{data.profile.User.public_gists}}</li>
-          <li>
-            <iron-icon src="../images/github.png"></iron-icon>
-            <a href$="{{_github(data.profile.User.login)}}" target="_blank">
-              {{data.profile.User.login}}
-            </a>
-          </li>
-          <li hidden$="{{!data.profile.User.blog}}">
-            <iron-icon icon="bookmark"></iron-icon>
-            <a href$="{{_makeLink(data.profile.User.blog)}}" target="_blank">
-              {{data.profile.User.blog}}
-            </a>
-          </li>
-          <li hidden$="{{!data.profile.User.email}}">
-            <iron-icon icon="mail"></iron-icon>
-            <a href$="mailto:{{data.profile.User.email}}">{{data.profile.User.email}}</a>
-          </li>
-        </ul>
+    <paper-material id="main" elevation="1">
+      <p class="paper-font-display1">{{data.profile.User.name}}</p>
+      <div class="user">
+        <div>
+          <img src$="{{data.profile.User.avatar_url}}" height="230" width="230"/>
+        </div>
+        <div>
+          <ul class="info">
+            <li>Followers: {{data.profile.User.followers}}</li>
+            <li>Public Repos: {{data.profile.User.public_repos}}</li>
+            <li>Public Gists: {{data.profile.User.public_gists}}</li>
+            <li>
+              <iron-icon src="../images/github.png"></iron-icon>
+              <a href$="{{_github(data.profile.User.login)}}" target="_blank">
+                {{data.profile.User.login}}
+              </a>
+            </li>
+            <li hidden$="{{!data.profile.User.blog}}">
+              <iron-icon icon="bookmark"></iron-icon>
+              <a href$="{{_makeLink(data.profile.User.blog)}}" target="_blank">
+                {{data.profile.User.blog}}
+              </a>
+            </li>
+            <li hidden$="{{!data.profile.User.email}}">
+              <iron-icon icon="mail"></iron-icon>
+              <a href$="mailto:{{data.profile.User.email}}">{{data.profile.User.email}}</a>
+            </li>
+          </ul>
+        </div>
       </div>
     </paper-material>
 
