@@ -1,8 +1,10 @@
 <link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../styles/shared-styles.html">
+<link rel="import" href="./stldevs-pager.html">
 
 <dom-module id="selected-language">
-  <style>
+  <style inherit="shared-styles">
     :host {
       display: block;
     }
@@ -33,18 +35,20 @@
                loading="{{loading}}"
                last-response="{{data}}"></iron-ajax>
 
+    <stldevs-pager page="[[page]]" count="[[data.count]]"></stldevs-pager>
+
     <template is="dom-repeat" items="{{data.languages}}" class="user">
       <paper-card elevation="1" class="card">
         <div class="card-content">
           <div class="card-heading">
             <h2 class="paper-font-headline">{{item.Owner}}</h2>
             <ul class="info">
-              <li><span>{{_numStars(item.Repos)}}</span> stars in <span>[[data.language]]</span></li>
-              <li><span>{{_numRepos(item.Repos)}}</span> repos in <span>[[data.language]]</span></li>
+              <li><span>{{numStars(item.Repos)}}</span> stars in <span>[[data.language]]</span></li>
+              <li><span>{{numRepos(item.Repos)}}</span> repos in <span>[[data.language]]</span></li>
             </ul>
           </div>
           <ul>
-            <template is="dom-repeat" items="{{_topThree(item.Repos)}}" as="repo">
+            <template is="dom-repeat" items="{{topThree(item.Repos)}}" as="repo">
               <li>
                 <span class="repo">[[repo.Name]]</span>
                 <template is="dom-if" if="[[repo.Description]]">-</template>
@@ -54,7 +58,7 @@
           </ul>
         </div>
         <div class="card-actions">
-          <a href="{{_getProfileLink(item.Owner)}}">
+          <a href="{{getProfileLink(item.Owner)}}">
             <paper-button>
               view [[item.Owner]]
             </paper-button>
@@ -62,6 +66,8 @@
         </div>
       </paper-card>
     </template>
+
+    <stldevs-pager page="[[page]]" count="[[data.count]]"></stldevs-pager>
   </template>
 
   <script>
@@ -78,34 +84,60 @@
             notify: true
           },
           data: {
-            type: Array
+            type: Object,
+            observer: '_dataChanged'
+          },
+          page: {
+            type: Number,
+            value: 0
           }
+        },
+        listeners: {
+          previousPage: 'previousPage',
+          nextPage: 'nextPage'
         },
         _languageChanged: function() {
           if (!this.language) {
             return;
           }
-          this.$.ajax.url = '/stldevs-api/lang/' + this.language;
+          this.page = 0;
+          this.$.ajax.url = '/stldevs-api/lang/' + this.language + '?page=0';
           this.$.ajax.generateRequest();
         },
-        _numStars: function(repos) {
+        previousPage: function() {
+          this.gotoPage(this.page-1);
+        },
+        nextPage: function() {
+          this.gotoPage(this.page+1);
+        },
+        gotoPage: function(page) {
+          this.page = page;
+          this.$.ajax.url = '/stldevs-api/lang/' + this.language + '?page=' + page;
+          this.$.ajax.generateRequest();
+        },
+        _dataChanged: function() {
+          if (this.data && this.data.page) {
+            this.page = this.data.page;
+          }
+        },
+        numStars: function(repos) {
           var sum = 0;
           for (var i=0; i < repos.length; i++) {
             sum += repos[i].StargazersCount;
           }
           return sum;
         },
-        _numRepos: function(repos) {
+        numRepos: function(repos) {
           return repos.length;
         },
-        _topThree: function(repos) {
+        topThree: function(repos) {
           var three = [];
           for (var i=0; i < repos.length && i < 3; i++) {
             three.push(repos[i]);
           }
           return three;
         },
-        _getProfileLink: function(user) {
+        getProfileLink: function(user) {
           return "/profile/" + user;
         }
       });

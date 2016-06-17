@@ -1,0 +1,69 @@
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../styles/shared-styles.html">
+
+<dom-module id="stldevs-pager">
+  <style inherit="shared-styles">
+    .pager {
+      @apply(--layout-horizontal);
+      @apply(--layout-around-justified);
+      margin-bottom: 16px;
+    }
+    paper-button {
+      background: white;
+    }
+  </style>
+  <template>
+    <div class="pager">
+      <paper-button raised on-tap="previousPage" disabled$="{{noPrevPage}}">
+        <iron-icon icon="arrow-back"></iron-icon>
+      </paper-button>
+      <h3 class="paper-font-headline">{{stats}} of {{count}}</h3>
+      <paper-button raised on-tap="nextPage" disabled$="{{noNextPage}}">
+        <iron-icon icon="arrow-forward"></iron-icon>
+      </paper-button>
+    </div>
+  </template>
+  <script>
+    Polymer({
+      is: 'stldevs-pager',
+      properties: {
+        page: {
+          type: Number,
+          observer: '_disableButtons'
+        },
+        count: {
+          type: Number,
+          observer: '_disableButtons'
+        },
+        noPrevPage: {
+          type: Boolean
+        },
+        noNextPage: {
+          type: Boolean
+        }
+      },
+      nextPage: function() {
+        this.fire('nextPage');
+      },
+      previousPage: function() {
+        this.fire('previousPage');
+      },
+      _disableButtons: function() {
+        if (this.page === undefined || this.count === undefined) {
+          this.noPrevPage = true;
+          this.noNextPage = true;
+          return;
+        }
+        this.stats = this.showing();
+        this.noPrevPage = this.page <= 0;
+        this.noNextPage = this.page*20+20 >= this.count;
+      },
+      showing: function() {
+        let last = this.page * 20 + 20;
+        last = last > this.count ? this.count : last;
+        console.log('page', this.page);
+        return this.page * 20 + "-" + last;
+      }
+    });
+    </script>
+</dom-module>
