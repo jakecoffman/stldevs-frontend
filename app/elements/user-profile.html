@@ -144,7 +144,9 @@
           return "https://github.com/" + login + "/" + repo;
         },
         _makeLink: function(possibleLink) {
-          return possibleLink.startsWith('http') ? possibleLink : 'http://' + possibleLink;
+          if (possibleLink) {
+            return possibleLink.startsWith('http') ? possibleLink : 'http://' + possibleLink;
+          }
         }
       });
     })();
