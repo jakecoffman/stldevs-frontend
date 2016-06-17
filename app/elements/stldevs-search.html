@@ -101,7 +101,10 @@
       <a href$="profile/{{item.Owner}}" class="nostyle">
         <paper-material elevation="1" class="repo">
           <div>
-            <div class="paper-font-headline">{{item.Owner}}/{{item.Name}}</div>
+            <div class="paper-font-headline">
+              <iron-icon src="../images/fork.png" hidden$="{{!item.Fork}}"></iron-icon>
+              {{item.Owner}}/{{item.Name}}
+            </div>
             <span class="paper-font-body1">{{item.Description}}</span>
           </div>
           <div class="starsnforks">
