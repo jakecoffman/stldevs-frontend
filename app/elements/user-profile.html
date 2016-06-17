@@ -1,4 +1,9 @@
 <link rel="import" href="../styles/shared-styles.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../bower_components/iron-icon/iron-icon.html">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../bower_components/paper-material/paper-material.html">
 
 <dom-module id="user-profile">
   <style include="shared-styles">
@@ -13,6 +18,7 @@
     .user {
       @apply(--layout-horizontal);
       @apply(--layout-justified);
+      @apply(--layout-center);
       @apply(--layout-wrap);
     }
 
@@ -35,12 +41,15 @@
                last-response="{{data}}"
                loading="{{loading}}"></iron-ajax>
     <paper-material id="main" elevation="1" class="user">
-      <section>
+      <div>
         <p class="paper-font-display1">{{data.profile.User.name}}</p>
-
         <img src$="{{data.profile.User.avatar_url}}" height="230" width="230"/>
-
+      </div>
+      <div>
         <ul class="info">
+          <li>Followers: {{data.profile.User.followers}}</li>
+          <li>Public Repos: {{data.profile.User.public_repos}}</li>
+          <li>Public Gists: {{data.profile.User.public_gists}}</li>
           <li>
             <iron-icon src="../images/github.png"></iron-icon>
             <a href$="{{_github(data.profile.User.login)}}" target="_blank">
@@ -58,17 +67,7 @@
             <a href$="mailto:{{data.profile.User.email}}">{{data.profile.User.email}}</a>
           </li>
         </ul>
-      </section>
-      <section class="horizontal layout center">
-        <dl>
-          <dt class="paper-font-display1">Followers</dt>
-          <dd class="paper-font-display2">{{data.profile.User.followers}}</dd>
-          <dt class="paper-font-display1">Public Repos</dt>
-          <dd class="paper-font-display2">{{data.profile.User.public_repos}}</dd>
-          <dt class="paper-font-display1">Public Gists</dt>
-          <dd class="paper-font-display2">{{data.profile.User.public_gists}}</dd>
-        </dl>
-      </section>
+      </div>
     </paper-material>
 
     <h2 class="paper-font-display2">Repositories</h2>
@@ -143,7 +142,7 @@
         _getRepoUrl: function (login, repo) {
           return "https://github.com/" + encodeURIComponent(login) + "/" + encodeURIComponent(repo);
         },
-        _makeLink: function(possibleLink) {
+        _makeLink: function (possibleLink) {
           if (possibleLink) {
             return possibleLink.startsWith('http') ? possibleLink : 'http://' + possibleLink;
           }
