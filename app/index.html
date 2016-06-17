@@ -79,6 +79,11 @@
             <iron-icon icon="face"></iron-icon>
             <span>Top Developers</span>
           </a>
+
+          <a data-route="search" href="/search">
+            <iron-icon icon="search"></iron-icon>
+            <span>Search</span>
+          </a>
         </paper-menu>
       </paper-scroll-header-panel>
 
@@ -138,6 +143,10 @@
               </template>
               <selected-language language="{{params.language}}" loading="{{loading}}" hidden="[[loading]]">
               </selected-language>
+            </section>
+
+            <section data-route="search">
+              <stldevs-search></stldevs-search>
             </section>
 
           </iron-pages>

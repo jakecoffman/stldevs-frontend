@@ -23,6 +23,13 @@
       app.tagline = 'most prolific developers in St. Louis';
     });
 
+    page('/search', function() {
+      app.route = 'search';
+      app.title = 'Search';
+      app.tagline = '';
+      app.params = undefined;
+    });
+
     page('/profile/:user', function (data) {
       app.route = 'profile';
       app.params = data.params;
