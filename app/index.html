@@ -80,6 +80,11 @@
             <span>Top Developers</span>
           </a>
 
+          <a data-route="toporgs" href="/toporgs">
+            <iron-icon icon="social:people"></iron-icon>
+            <span>Top Organizations</span>
+          </a>
+
           <a data-route="search" href="/search">
             <iron-icon icon="search"></iron-icon>
             <span>Search</span>
@@ -129,11 +134,23 @@
               <top-developers></top-developers>
             </section>
 
+            <section data-route="toporgs">
+              <top-organizations></top-organizations>
+            </section>
+
             <section data-route="profile">
               <template is="dom-if" if="{{loading}}">
                 <paper-spinner active></paper-spinner>
               </template>
               <user-profile user="{{params.user}}" loading="{{loading}}" hidden="{{loading}}">
+              </user-profile>
+            </section>
+
+            <section data-route="org">
+              <template is="dom-if" if="{{loading}}">
+                <paper-spinner active></paper-spinner>
+              </template>
+              <user-profile user="{{params.org}}" loading="{{loading}}" hidden="{{loading}}">
               </user-profile>
             </section>
 

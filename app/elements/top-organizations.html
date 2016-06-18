@@ -1,6 +1,6 @@
 <link rel="import" href="../styles/table-styles.html">
 
-<dom-module id="top-developers">
+<dom-module id="top-organizations">
 
   <style include="table-styles">
     #lastrun {
@@ -47,14 +47,14 @@
   <script>
     (function () {
       Polymer({
-        is: 'top-developers',
+        is: 'top-organizations',
         properties: {
           data: {
             type: Array
           }
         },
         _getProfileLink: function (login) {
-          return '/profile/' + encodeURIComponent(login);
+          return '/org/' + encodeURIComponent(login);
         },
         _date: function (date) {
           if (date) {
@@ -63,7 +63,7 @@
           return ""
         },
         _topdevs: function () {
-          return '/stldevs-api/topdevs';
+          return '/stldevs-api/toporgs';
         }
       });
     })();

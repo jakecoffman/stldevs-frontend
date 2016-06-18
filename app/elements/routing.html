@@ -42,6 +42,12 @@
       app.tagline = 'most prolific in St. Louis';
     });
 
+    page('/toporgs', function () {
+      app.route = 'toporgs';
+      app.title = 'Top Organizations';
+      app.tagline = 'most prolific in St. Louis';
+    });
+
     page('/search', function() {
       app.route = 'search';
       app.title = 'Search';
@@ -53,6 +59,14 @@
       app.route = 'profile';
       app.params = data.params;
       app.title = 'Developer Profile';
+      app.tagline = 'the work ' + data.params.user + ' has done';
+    });
+
+
+    page('/org/:org', function (data) {
+      app.route = 'org';
+      app.params = data.params;
+      app.title = 'Organization Profile';
       app.tagline = 'the work ' + data.params.user + ' has done';
     });
 
